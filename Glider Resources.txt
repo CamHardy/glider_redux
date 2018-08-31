@@ -1,0 +1,203 @@
+Glider Resources
+
+Rooms (made of 8 64x342px slices):
+	Plain Room 			√
+	Paneled Room 		√
+	Basement 			√
+	Japanese Rooms		√
+	Child's Room 		√
+	Unfinished Room 	√
+	Hip Wallpaper		√
+	Entertainment		√
+	Bathroom			√
+	Kitchen				√
+
+All entities have an id number assigned to them
+There can be no more than 16 entities in a room
+
+Room:
+	Has id, entities, enemies, and state
+	Can be normal, blowers off, or lights off
+	Can have one type of enemy
+		Max # at one time
+		Seconds of delay in seconds
+	
+
+Objects:
+	Notes: 
+		Objects cannot be placed higher than top_coord = 24
+		Objects kill you
+
+	Table
+		Has x, y, and width
+		Table width affects shadow width
+			Table height affect shadow offset
+			Draw order: stand/top, shadow, base
+
+	Shelf
+		Has x, y, and width
+
+	Cabinets
+		Has x, y, width, and height
+		Has two forms: wall mounted and floor placed
+		If bottom_coord > 280: cabinet becomes floor placed
+		Shadow for wall mounted is parallelogram
+		Shadow for floor placed is trapezoidal
+		# of panels = ceiling((width - 47) / 48)
+		Gap between panels is constant
+
+	Books
+		Has x and y
+
+	Computer
+		Has x and y
+
+	Garbage can
+		Has x and y
+
+	Invisible Object
+		Has x, y, width, and height
+
+
+Blowers:
+	Floor vent
+		Has x and air_length
+		Blows up
+
+	Ceiling vent
+		Has x and air_length
+		Blows down
+
+	Ceiling hole
+		Has x, air_length, linked_room_id, and state
+		Can blow down or suck up
+		Can transport player to another vent or another room
+
+	Candle
+		Has x, y, and air_length
+		Acts like floor vent except lights player on fire if flame is touched
+
+	Fan
+		Has x, y, direction, air_length, and state
+		Can be on or off
+		Can point left or right
+
+	Kettle
+		Has x, y, and delay (1/60)
+		Emits a diagonal blast of steam periodically
+
+
+Decorations:
+	Oz Picture
+		Has x and y
+
+	Window
+		Has x, y, width, height, and state
+		Gap between window panes constant
+		Always two window panes
+		Lightning flashes through it periodically
+		Can be open or closed
+		If open, wind causes player to fly erratically
+
+	Guitar
+		Has x and y
+		Plays a chord when player flys past its strings
+
+	Mirror
+		Has x, y, width, and height
+		Shows a reflection of the player when passing by
+	
+	Invisible Exit
+		Has x, y, width, height, and linked_room_id
+		Transports player to another room
+
+	Up/Down stairs
+		Has x and linked_room_id
+		Transports player to an adjacent room above/below
+		If travelling up stairs, players will spawn in linked room moving up and to the left
+		If travelling down stairs, players will spawn in linked room moving down and to the right
+
+
+Items:
+	Clock
+		Has x, y, and points
+		Adds points to player's score
+
+	Extra life
+		Has x, y, and points
+
+	Grease
+		Has x, y, spill_length, state
+		Can be upright or spilled
+		Spill allows player to slide across surfaces (the spill creates its own surface)
+
+	Battery
+		Has x, y, and quantity
+		Allows player to boost
+
+	Rubber bands
+		Has x, y, and quantity
+		Provides player with ammunition
+
+	Invisible bonus points zone
+		Has x, y, width, height, and points
+		Touching the hitbox rewards player with points
+
+
+Enemies:
+	Copter
+		Descends at a steep angle
+		Worth 200 points
+
+	Dart
+		Descends at a shallow angle
+		Worth 300 points
+
+	Balloon
+		Rises vertically slowly
+		Worth 100 points
+
+
+Hazards:
+	Goldfish
+		Has x, y, jump_length, and delay (1/60)
+		Jumps vertically out of bowl periodically
+
+	Toaster
+		Has x, y, eject_length, and delay (1/60)
+		Ejects toast vertically periodically
+
+	Water drip
+		Has x, y, drip_length, and delay (1/60)
+		Drips water downwards periodically
+
+	Basketball
+		Has x, y, and travel length
+		Bounces vertically
+
+	Shredder
+		Has x, y, and state
+		Can be on or off
+		If on, shreds player on contact
+
+	Socket
+		Has x, y, and delay (1/60)
+		Pulses periodically
+		If on, electrocutes player 
+
+
+Switches:
+	Light switch
+		Has x and y
+		Can turn on room lights
+		Cannot turn off room lights
+
+	Thermostat
+		Has x and y
+		Can turn on room blowers
+		Cannot turn off room blowers
+
+	Toggle switch
+		Has x, y, and linked_object_id
+		Can turn an object on or off
+		Can be linked to shredders/fans
